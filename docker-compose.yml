@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+
+  minio:
+    image: minio/minio
+    container_name: "minio-server"
+    volumes:
+      - "./minio-data:/data"
+    environment:
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+      - VIRTUAL_HOST=${VIRTUAL_HOST}
+      - LETSENCRYPT_HOST=${VIRTUAL_HOST}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+    command: server /data
+    restart: always
+
+networks:
+    default:
+        external:
+            name: webproxy
